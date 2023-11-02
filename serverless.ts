@@ -1,11 +1,13 @@
 import type { AWS } from '@serverless/typescript';
 import { helloRoutes } from 'src/routes/hello.routes';
+import {quartosRoutes} from 'src/routes/quartos.routes';
 
 const serverlessConfiguration: AWS = {
   service: 'aws-serverless-template',
   frameworkVersion: '3',
   plugins: ['serverless-esbuild', "serverless-offline"],
   provider: {
+    timeout: 14,
     name: 'aws',
     runtime: 'nodejs14.x',
     apiGateway: {
@@ -18,7 +20,7 @@ const serverlessConfiguration: AWS = {
     },
   },
   // import the function via paths
-  functions: { ...helloRoutes },
+  functions: { ...helloRoutes, ...quartosRoutes },
   package: { individually: true },
   custom: {
     esbuild: {
