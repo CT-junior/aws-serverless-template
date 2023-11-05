@@ -1,6 +1,6 @@
 import type { AWS } from '@serverless/typescript';
 import { helloRoutes } from 'src/routes/hello.routes';
-import {quartosRoutes} from 'src/routes/quartos.routes';
+import { quartosRoutes } from 'src/routes/quartos.routes';
 
 const serverlessConfiguration: AWS = {
   service: 'aws-serverless-template',
