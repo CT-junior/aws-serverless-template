@@ -1,9 +1,8 @@
 import { initializeApp } from "firebase/app";
-import { getFirestore, collection, getDocs, setDoc, doc, getDoc, deleteDoc } from "firebase/firestore";
 import IRoomsRepository from '../IRoomsRepositories';
 import { v4 as uuidv4 } from "uuid";
 import Rooom from 'src/models/Room';
-import ClientError from "src/errors/ClientError";
+import { doc, getFirestore, setDoc } from "firebase/firestore";
 
 const firebaseConfig = {
     apiKey: "AIzaSyAugWyvlqfPQi0Z2COhoLv7O6JH0unUQkk",
@@ -18,6 +17,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 
 class RoomsRepositories implements IRoomsRepository{
+
     private readonly db = getFirestore(app);
 
     async create(qtd_camas: number, email: string): Promise<void> {
@@ -39,53 +39,21 @@ class RoomsRepositories implements IRoomsRepository{
         return undefined;
     }
 
-    async findAll(): Promise<Rooom[]> {
-
-        const quartosCollection = collection(this.db, 'quartos');
-        const quartoSnapshot = await getDocs(quartosCollection);
-
-        const quartoList = quartoSnapshot.docs.map(doc => 
-            ({
-                id: doc.id,
-                qtd_camas: doc.data().qtd_camas
-            })
-        );
-
-        return quartoList as unknown as Rooom[];
+    findAll(): Promise<Rooom[]> {
+        throw new Error("Method not implemented.");
     }
-
-    async findById(id: string): Promise<Rooom> {
-
-        const document = await getDoc(doc(this.db, "quartos", id));
-        if(!document){
-            throw new ClientError("Document not found!");
-        }
-
-        const room = {
-            id: document.id,
-            qtd_camas: document.data().qtd_camas
-        }
-        return room;
+    findById(id: string): Promise<Rooom> {
+        throw new Error("Method not implemented.");
     }
-
-    async update(room_id: string, qtd_camas: number): Promise<void> {
-        await setDoc(doc(this.db, "quartos", room_id), {
-            qtd_camas: qtd_camas
-        });
-        return undefined;
+    update(room_id: string, qtd_camas: number): Promise<void> {
+        throw new Error("Method not implemented.");
     }
-
-    async insertPerson(room: Rooom, email: string): Promise<void> {
-        await setDoc(doc(this.db, "quartos", room.id, "pessoas", email), {});
-        return undefined;
+    insertPerson(room: Rooom, email: string): Promise<void> {
+        throw new Error("Method not implemented.");
     }
-
-    async removePerson(room: Rooom, email: string): Promise<void> {
-        const docRef = doc(this.db, "quartos", room.id, "pessoas", email);
-        await deleteDoc(docRef);
-        return undefined;
+    removePerson(room: Rooom, email: string): Promise<void> {
+        throw new Error("Method not implemented.");
     }
-    
     delete(id: string): Promise<void> {
         throw new Error("Method not implemented.");
     }
